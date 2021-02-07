@@ -5,6 +5,8 @@ quanto descritto nel tutorial seguente potreste aver bisogno di aggiungere un'ec
 l'utilizzo di applicazioni esterne dalle impostazioni del vostro account di posta! 
 devi andare nella sezione sicurezza dell'account google e disattivare il blocco accesso delle 
 App meno sicure """
+
+
 def postino():
     print("""
     Questa è la funzione Postino: spedisce eMail utilizzando Gmail!
@@ -20,16 +22,14 @@ def postino():
     messaggio = input("Ora puoi inserire il messaggio che vuoi inviare: ")
     contenuto = f"Subject: {oggetto}\n\n{messaggio}"
     print("Sto effettuando la connessione col Server...")
-    # email = smtplib.SMTP("smtp.live.com", 25) Port:25 o 587   server Hotmail e porta TLS relativa 
-    email = smtplib.SMTP("smtp.gmail.com",587) # server Gmail e porta TLS relativa
-    email.ehlo()        # connessione al server
-    email.starttls()    #  tls sta per Transport Layer Security, 
-                        #  ovvero il protocollo crittografico che mette in 
-                        #  sicurezza la nostra comunicazione col Server
-    email.login(username,password) # email.login("username", "password")
+    email = smtplib.SMTP("smtp.gmail.com",587)
+    email.ehlo()  
+    email.starttls()  
+    
+    email.login(username,password)
     print("Sto inviando...")
-    email.sendmail(username, destinatario, contenuto)# email.sendmail("mittente", "destinatario", messaggio)
-    email.quit()  # disconnetti dal server
+    email.sendmail(username, destinatario, contenuto)
+    email.quit()
     print("Messaggio Inviato!")
     input("")
 
