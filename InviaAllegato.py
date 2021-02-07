@@ -12,39 +12,39 @@ oggi=str(datetime.datetime.now())
 
 def finder():
     percorso=r"C:\Users\Federico\Desktop\Guide\Python"
-    file_allegare = [] #array con il percorso di ogni file da allegare
+    file_allegare = []
     for cartella,sottocartelle,files in os.walk(percorso):
         for file in files:
-            if file.endswith(".JPG") or file.endswith(".jpg"): #mi interessano solo i JPG
-                file_controllare=os.path.join(cartella,file) #file nella cartella da controllare la data
-                data_file = datetime.datetime.fromtimestamp(os.path.getmtime(file_controllare))#data file
-                data=str(data_file) #trasformo in stringa
+            if file.endswith(".JPG") or file.endswith(".jpg"):
+                file_controllare=os.path.join(cartella,file)
+                data_file = datetime.datetime.fromtimestamp(os.path.getmtime(file_controllare))
+                data=str(data_file)
                 if data[0:10] == oggi[0:10]:    #se la data è uguale ad oggi
-                    file_allegare.append(os.path.join(cartella,file)) #salvo il xcorso file nell'array
-    return file_allegare    #ritorno il file
+                    file_allegare.append(os.path.join(cartella,file))
+    return file_allegare
 
 def postino(lista_file):
-    msg = EmailMessage()        # Create the container email message.
+    msg = EmailMessage()   
     msg['Subject'] = "SCREENSHOOT"
-    msg['From'] = "fedemilani.89@hotmail.it" #mittente
-    msg['To'] = "fedemilani.89@hotmail.it"  #destinatario
+    msg['From'] = "fedemilani.89@hotmail.it"
+    msg['To'] = "fedemilani.89@hotmail.it"
     if lista_file != []:
         for file in lista_file:
-            with open(file, 'rb') as fp: #apre il file img dell'array da allegare nella variabile fp
-                img_data = fp.read()    #metto il file img in img_data
+            with open(file, 'rb') as fp:
+                img_data = fp.read() 
                 msg.add_attachment(img_data, maintype='image',subtype=imghdr.what(None, img_data))
-    else:                   #allego il file img e con imghdr controllo che tipo di file img sia(JPEG,PNG)
-        print("Non ci sono file di oggi da inviare!") # se array da allegare vuoto,esco
+    else:    
+        print("Non ci sono file di oggi da inviare!")
         input("")
         return None
     # Send the email via our own SMTP server.
-    email=smtplib.SMTP("smtp.live.com", 25) #server e port Hotmail
+    email=smtplib.SMTP("smtp.live.com", 25)
     email.ehlo()    #connessione al server
     email.starttls()  #crittografia TLS
-    email.login("fedemilani.89@hotmail.it","FedeGiadiTobiLugna4") #mie credenziali Hotmail
+    email.login("fedemilani.89@hotmail.it","FedeGiadiTobiLugna4")
     print("Sto inviando...")
-    email.send_message(msg) #invia mail con allegato
-    email.quit()        #chiude connessione
+    email.send_message(msg) 
+    email.quit()  
     print("Messaggio Inviato!")
     input("")
 
